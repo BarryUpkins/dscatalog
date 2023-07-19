@@ -1,0 +1,14 @@
+INSERT INTO tb_category (name) VALUES ('Livros');
+INSERT INTO tb_category (name) VALUES ('Eletrônicos');
+INSERT INTO tb_category (name) VALUES ('Computadores');
+INSERT INTO tb_category (name) VALUES ('Cars');
+INSERT INTO tb_category (name) VALUES ('Bikes');
+INSERT INTO tb_category (name) VALUES ('Phones');
+INSERT INTO tb_category (name) VALUES ('Tools');
+INSERT INTO tb_category (name) VALUES ('Garden');
+INSERT INTO tb_category (name) VALUES ('Games');
+INSERT INTO tb_category (name) VALUES ('Courses');
+INSERT INTO tb_category (name) VALUES ('Movies');
+INSERT INTO tb_category (name) VALUES ('Series');
+INSERT INTO tb_category (name) VALUES ('Gadgets');
+INSERT INTO tb_category (name) VALUES ('Tickets');
