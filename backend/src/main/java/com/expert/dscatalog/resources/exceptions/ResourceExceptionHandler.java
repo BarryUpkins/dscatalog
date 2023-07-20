@@ -1,5 +1,6 @@
 package com.expert.dscatalog.resources.exceptions;
 
+import com.expert.dscatalog.services.exceptions.DatabaseException;
 import com.expert.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -23,5 +24,19 @@ public class ResourceExceptionHandler {
         err.setPath( request.getRequestURI() );
 
         return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( err );
+    }
+
+    @ExceptionHandler( DatabaseException.class )
+    public ResponseEntity<StandardError> database(
+            DatabaseException e, HttpServletRequest request ){
+
+        StandardError err = new StandardError();
+        err.setTimeStamp( Instant.now() );
+        err.setStatus( HttpStatus.BAD_REQUEST.value() );
+        err.setError( "Database Exception - Can't delete category, leaving products without one" );
+        err.setMessage( e.getMessage() );
+        err.setPath( request.getRequestURI() );
+
+        return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( err );
     }
 }
