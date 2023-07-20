@@ -4,6 +4,7 @@ import com.expert.dscatalog.dto.CategoryDto;
 import com.expert.dscatalog.entities.Category;
 import com.expert.dscatalog.repositories.CategoryRepository;
 
+import com.expert.dscatalog.services.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,5 +34,15 @@ public class CategoryService {
         return listDto;
         */
 
+    }
+
+    @Transactional( readOnly = true )
+    public CategoryDto findById(Long id) {
+       /* Optional<Category> opt = repo.findById( id );
+        return new CategoryDto( opt.get() );*/
+
+         Optional<Category> opt = repo.findById( id );
+         return new CategoryDto( opt.orElseThrow(
+                 () -> new EntityNotFoundException( "Entity Not Found" ) ) );
     }
 }
