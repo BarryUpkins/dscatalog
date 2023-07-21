@@ -10,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +27,23 @@ public class CategoryService {
     private CategoryRepository repo;
 
     @Transactional( readOnly = true )
+    public Page<CategoryDto> findAllPaged( Pageable pageRequest ) {
+        Page<Category> list = repo.findAll( pageRequest );
+        return list.map( e -> new CategoryDto( e ) );
+    }
+
+/*    @Transactional( readOnly = true )
     public List<CategoryDto> findAll(){
         List<Category> list = repo.findAll();
         return list.stream().map(
                 e -> new CategoryDto( e ) ).collect( Collectors.toList() );
 
-        /*
-        for( Category category : list ){
-            listDto.add( new CategoryDto( category ) );
-        }
-        return listDto;
-        */
 
-    }
+        //for( Category category : list ){
+        //    listDto.add( new CategoryDto( category ) );
+        //}
+        //return listDto;
+    }*/
 
     @Transactional( readOnly = true )
     public CategoryDto findById(Long id) {
@@ -79,4 +85,5 @@ public class CategoryService {
             throw new DatabaseException( "Integrity Violation" );
         }
     }
+
 }
