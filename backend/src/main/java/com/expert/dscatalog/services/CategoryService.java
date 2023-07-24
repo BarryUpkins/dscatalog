@@ -26,10 +26,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
-    @Transactional( readOnly = true )
-    public Page<CategoryDto> findAllPaged( Pageable pageRequest ) {
-        Page<Category> list = repo.findAll( pageRequest );
-        return list.map( e -> new CategoryDto( e ) );
+    @Transactional(readOnly = true)
+    public Page<CategoryDto> findAllPaged(Pageable pageable ) {
+        Page<Category> list = repo.findAll( pageable );
+        return list.map(e -> new CategoryDto(e));
     }
 
 /*    @Transactional( readOnly = true )
@@ -45,44 +45,41 @@ public class CategoryService {
         //return listDto;
     }*/
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public CategoryDto findById(Long id) {
-       /* Optional<Category> opt = repo.findById( id );
-        return new CategoryDto( opt.get() );*/
-
-         Optional<Category> opt = repo.findById( id );
-         return new CategoryDto( opt.orElseThrow(
-                 () -> new ResourceNotFoundException( "Entity Not Found" ) ) );
+        Optional<Category> opt = repo.findById(id);
+        return new CategoryDto(opt.orElseThrow(
+                () -> new ResourceNotFoundException("Entity Not Found")));
     }
 
     @Transactional
     public CategoryDto insert(CategoryDto dto) {
         Category entity = new Category();
-        entity.setName( dto.getName() );
-        entity = repo.save( entity );
-        return new CategoryDto( entity );
+        entity.setName(dto.getName());
+        entity = repo.save(entity);
+        return new CategoryDto(entity);
     }
 
     @Transactional
-    public CategoryDto update( long id, CategoryDto dto ) {
+    public CategoryDto update( Long id, CategoryDto dto) {
         try {
             Category entity = repo.getReferenceById(id);
-            entity.setName( dto.getName() );
-            entity = repo.save( entity );
+            entity.setName(dto.getName());
+            entity = repo.save(entity);
 
-            return new CategoryDto( entity );
-        }catch( EntityNotFoundException e ){
-            throw new ResourceNotFoundException( "Id not found "+ id );
+            return new CategoryDto(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
         }
     }
 
     public void delete(Long id) {
-        try{
-            repo.deleteById( id );
-        }catch( EmptyResultDataAccessException e ){
-            throw new ResourceNotFoundException( "Id " + id + " não encontrado" );
-        }catch( DataIntegrityViolationException e ){
-            throw new DatabaseException( "Integrity Violation" );
+        try {
+            repo.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id " + id + " não encontrado");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity Violation");
         }
     }
 
