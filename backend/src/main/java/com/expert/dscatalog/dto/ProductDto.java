@@ -21,9 +21,7 @@ public class ProductDto implements Serializable {
 
     private List<CategoryDto> categories = new ArrayList<>();
 
-    public List<CategoryDto> getCategories() {
-        return categories.stream().toList();
-    }
+
 
     public ProductDto() { }
 
@@ -95,6 +93,11 @@ public class ProductDto implements Serializable {
     }
 
 
-    public void setCategories(Set<CategoryDto> collect) {
+    public void setCategories( List<CategoryDto> collect) {
+        collect.forEach( cat -> categories.add( cat ) );
+    }
+
+    public List<CategoryDto> getCategories() {
+        return categories.stream().toList();
     }
 }

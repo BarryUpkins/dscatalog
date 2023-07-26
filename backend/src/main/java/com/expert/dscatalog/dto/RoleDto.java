@@ -1,32 +1,26 @@
-package com.expert.dscatalog.entities;
+package com.expert.dscatalog.dto;
 
+import com.expert.dscatalog.entities.Role;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
-@Table( name = "tb_role" )
-public class Role implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY )
+public class RoleDto {
     private Long id;
     private String authority;
 
-    @ManyToMany( mappedBy = "roles" )
-    private Set<User> users = new HashSet<>();
-
-
-    public Role() {
+    public RoleDto() {
     }
 
-    public Role(Long id, String authority) {
+    public RoleDto(Long id, String authority) {
         this.id = id;
         this.authority = authority;
+    }
+
+    public RoleDto( Role role ) {
+        this.setId( role.getId() );
+        this.setAuthority( role.getAuthority() );
     }
 
     public Long getId() {
@@ -45,31 +39,16 @@ public class Role implements Serializable {
         this.authority = authority;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
+        RoleDto role = (RoleDto) o;
         return Objects.equals(id, role.id) && Objects.equals(authority, role.authority);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, authority);
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "authority='" + authority + '\'' +
-                '}';
     }
 }
