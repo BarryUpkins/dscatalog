@@ -1,5 +1,6 @@
 package com.expert.dscatalog.entities;
 
+import com.expert.dscatalog.dto.RoleDto;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -27,6 +28,11 @@ public class Role implements Serializable {
     public Role(Long id, String authority) {
         this.id = id;
         this.authority = authority;
+    }
+
+    public Role( RoleDto roleDto ){
+        this.id = roleDto.getId();
+        this.authority = roleDto.getAuthority();
     }
 
     public Long getId() {

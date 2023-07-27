@@ -21,8 +21,8 @@ public class User implements Serializable {
     private String email;
     private String password;
 
-    @ManyToMany
-    //@ManyToMany( fetch = FetchType.EAGER )
+    //@ManyToMany
+    @ManyToMany( fetch = FetchType.EAGER )
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn( name = "user_id" ),
@@ -31,14 +31,16 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(Long id, String firstName, String lastName, String email, String password ){//}, Set<Role> proles ) {
+    public User(Long id, String firstName, String lastName, String email, String password, Set<Role> proles ) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        //proles.forEach( role -> this.roles.add( role ) );
+        proles.forEach( role -> this.roles.add( role ) );
     }
+
+
 
 
     public Long getId() {

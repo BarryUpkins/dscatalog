@@ -2,6 +2,10 @@ package com.expert.dscatalog.dto;
 
 import com.expert.dscatalog.entities.Category;
 import com.expert.dscatalog.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,10 +17,19 @@ public class ProductDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @Size( min = 5, max = 400, message = "Entre 5 e 400 caracteres" )
+    @NotBlank( message = "Campo Obrigatório" )
     private String name;
+
+    @NotBlank( message = "Campo Obrigatório" )
     private String description;
+
+    @Positive( message = "Deve ser Positivo" )
     private Double price;
     private String imgUrl;
+
+    @PastOrPresent( message = "Data não pode ser futura" )
     private Instant date;
 
     private List<CategoryDto> categories = new ArrayList<>();

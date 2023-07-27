@@ -3,6 +3,7 @@ package com.expert.dscatalog.resources;
 import com.expert.dscatalog.dto.UserDto;
 import com.expert.dscatalog.entities.User;
 import com.expert.dscatalog.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,8 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> insert( @RequestBody UserDto dto ){
+    public ResponseEntity<UserDto> insert( @Valid @RequestBody UserDto dto ){
         UserDto userDto = service.insert( dto );
-        System.out.println( "insert = " + dto.getRoles().toString() );
-        System.out.println( "insert = " + userDto.getRoles().toString() );
         return ResponseEntity.ok().body( userDto );
     }
 }
